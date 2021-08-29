@@ -63,4 +63,17 @@ public class CabInvoiceServiceTest {
         int fare = service.calculateRidesFare(Arrays.asList(r1, r2));
         Assertions.assertEquals(100, fare);
     }
+
+    @Test
+    public void generate_invoice_for_2Rides(){
+        Ride r1 = new Ride(3, 1);
+        Ride r2 = new Ride(4, 2);
+        Ride r3 = new Ride(5, 3);
+        CabInvoiceService service = new CabInvoiceService();
+        Invoice invoice  = service.generateInvoice(Arrays.asList(r1, r2, r3));
+        Assertions.assertEquals(140, invoice.getTotalFare());
+        Assertions.assertEquals(3, invoice.getRideCount());
+        Assertions.assertEquals(47.0, invoice.getAverageFare());
+    }
+
 }

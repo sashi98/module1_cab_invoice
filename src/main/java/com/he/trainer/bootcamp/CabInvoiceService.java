@@ -1,5 +1,6 @@
 package com.he.trainer.bootcamp;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CabInvoiceService {
@@ -26,5 +27,12 @@ public class CabInvoiceService {
             sum += calculateFare(ride.dist, ride.waitingTimeInMin);
         }
         return sum;
+    }
+
+    public Invoice generateInvoice(List<Ride> rides) {
+        Invoice invoice = new Invoice();
+        invoice.setRideCount(rides.size());
+        invoice.setTotalFare(calculateRidesFare(rides));
+        return invoice;
     }
 }
