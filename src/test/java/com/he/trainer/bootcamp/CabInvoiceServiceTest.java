@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public class CabInvoiceServiceTest {
 
     @Disabled("This test can be ignored as fare calculation rule is changed and minimum 40rs fare policy applied.")
@@ -44,5 +47,20 @@ public class CabInvoiceServiceTest {
         Assertions.assertEquals(50, fare);
     }
 
+    @Test
+    public void fare_should_be_40rs_for_1Ride_of_1km_and_1min_waiting_charges(){
+        Ride r1 = new Ride(1, 1);
+        CabInvoiceService service = new CabInvoiceService();
+        int fare = service.calculateRidesFare(Collections.singletonList(r1));
+        Assertions.assertEquals(40, fare);
+    }
 
+    @Test
+    public void fare_should_be_100rs_for_2Rides_each_ride_of_4km_and_5min_waiting(){
+        Ride r1 = new Ride(4, 5);
+        Ride r2 = new Ride(4, 5);
+        CabInvoiceService service = new CabInvoiceService();
+        int fare = service.calculateRidesFare(Arrays.asList(r1, r2));
+        Assertions.assertEquals(100, fare);
+    }
 }
